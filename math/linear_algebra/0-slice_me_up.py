@@ -1,4 +1,3 @@
-alexa@ubuntu-xenial:linear_algebra$ cat 0-slice_me_up.py 
 #!/usr/bin/env python3
 arr = [9, 8, 2, 3, 9, 4, 1, 0, 3]
 arr1 = [arr[0], arr[1]]
