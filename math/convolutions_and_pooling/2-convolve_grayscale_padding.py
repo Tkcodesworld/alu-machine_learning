@@ -1,42 +1,27 @@
 #!/usr/bin/env python3
-"""Performs a convolution on grayscale images with custom padding"""
+"""Performs a convolution on grayscale images with custom padding."""
 
 import numpy as np
 
 
 def convolve_grayscale_padding(images, kernel, padding):
-    """
-    Performs a convolution on grayscale images with custom padding.
-
-    Args:
-        images (numpy.ndarray): shape (m, h, w)
-        kernel (numpy.ndarray): shape (kh, kw)
-        padding (tuple): (ph, pw)
-
-    Returns:
-        numpy.ndarray: convolved images
-    """
+    """Performs a convolution on grayscale images with custom padding."""
     m, h, w = images.shape
     kh, kw = kernel.shape
     ph, pw = padding
 
-    # Pad images with zeros
-    padded = np.pad(
-        images,
-        ((0, 0), (ph, ph), (pw, pw)),
-        mode='constant'
-    )
+    padded = np.pad(images,
+                    ((0, 0), (ph, ph), (pw, pw)),
+                    mode='constant')
 
-    output_h = h + 2 * ph - kh + 1
-    output_w = w + 2 * pw - kw + 1
+    oh = h + 2 * ph - kh + 1
+    ow = w + 2 * pw - kw + 1
 
-    output = np.zeros((m, output_h, output_w))
+    output = np.zeros((m, oh, ow))
 
     for i in range(kh):
         for j in range(kw):
-            output += (
-                padded[:, i:i + output_h, j:j + output_w]
-                * kernel[i, j]
-            )
+            output += (kernel[i, j] *
+                       padded[:, i:i + oh, j:j + ow])
 
     return output
